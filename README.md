@@ -10,4 +10,4 @@ Then, at the bottom, you can configure your own waypoints. The waypoint structur
 
 Here's an example output
 
-![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![Dubins Curve](https://github.com/fgabbert/dubins_py/blob/master/dubins_example.png)
