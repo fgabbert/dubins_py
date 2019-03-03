@@ -3,6 +3,8 @@ Calculate Dubins Curve between waypoints
 
 author: Fischer, but I just copied the math from this paper:
 
+fischergabbert@gmail.com
+
 http://mems.eng.uci.edu/files/2014/04/Dubins_Set_Robotics_2001.pdf
 
 Andrew Walker did this in C and I used that as a reference too..his github is out there somewhere
@@ -95,6 +97,8 @@ def calcDubinsPath(wpt1, wpt2, vel, phi_lim):
     beta  = (psi2 - theta) % (2*math.pi)
     best_word = -1
     best_cost = -1
+
+    # Calculate all dubin's paths between points
     tz[0], pz[0], qz[0] = dubinsLSL(alpha,beta,d)
     tz[1], pz[1], qz[1] = dubinsLSR(alpha,beta,d)
     tz[2], pz[2], qz[2] = dubinsRSL(alpha,beta,d)
@@ -102,6 +106,7 @@ def calcDubinsPath(wpt1, wpt2, vel, phi_lim):
     tz[4], pz[4], qz[4] = dubinsRLR(alpha,beta,d)
     tz[5], pz[5], qz[5] = dubinsLRL(alpha,beta,d)
 
+    # Now, pick the one with the lowest cost
     for x in range(6):
         if(tz[x]!=-1):
             cost = tz[x] + pz[x] + qz[x]
@@ -113,6 +118,7 @@ def calcDubinsPath(wpt1, wpt2, vel, phi_lim):
     param.type = TurnType(best_word)
     return param
 
+# Here's all of the dubins path math
 def dubinsLSL(alpha, beta, d):
     tmp0      = d + math.sin(alpha) - math.sin(beta)
     tmp1      = math.atan2((math.cos(beta)-math.cos(alpha)),tmp0)
@@ -215,7 +221,9 @@ def dubins_traj(param,step):
         i+=1
     return path
 
+
 def dubins_path(param, t):
+    # Helper function for curve generation
     tprime = t/param.turn_radius
     p_init = np.array([0,0,headingToStandard(param.p_init.psi)*math.pi/180])
     #
@@ -244,6 +252,7 @@ def dubins_path(param, t):
     return end_pt
 
 def dubins_segment(seg_param, seg_init, seg_type):
+    # Helper function for curve generation
     L_SEG = 1
     S_SEG = 2
     R_SEG = 3
@@ -265,8 +274,8 @@ def dubins_segment(seg_param, seg_init, seg_type):
 
 def main():
     # User's waypoints: [x, y, heading (degrees)]
-    pt1 = Waypoint(50000,50000,180)
-    pt2 = Waypoint(50000,49000,180)
+    pt1 = Waypoint(0,0,0)
+    pt2 = Waypoint(6000,7000,260)
     #pt3 = Waypoint(1000,15000,180)
     #pt4 = Waypoint(0,0,270)
     Wptz = [pt1, pt2]
@@ -283,7 +292,7 @@ def main():
         i+=1
     plt.grid(True)
     plt.axis("equal")
-    plt.title('Dubins Curves Trajectory Generation')
+    plt.title('Dubin\'s Curves Trajectory Generation')
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.show()
