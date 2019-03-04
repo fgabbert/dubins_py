@@ -8,6 +8,9 @@ Pretty straight forward...pull or copy the python file, and download the necessa
 Then, at the bottom, you can configure your own waypoints. The waypoint structure is (x, y, psi), where Psi is a bearing in NED coordinates (Due north = 0 deg)
 
 
-Here's an example output
+Here's an example output:
+  
+  pt1 = Waypoint(0,0,0)
+  pt2 = Waypoint(6000,7000,260)
 
 ![Dubins Curve](https://github.com/fgabbert/dubins_py/blob/master/dubins_example.png)
